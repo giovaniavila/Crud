@@ -2,16 +2,13 @@ package resource.provajuliana;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
 
 import javax.swing.*;
 import java.sql.*;
 
 import static resource.provajuliana.ConnectionFactory.getConnection;
 
-public class alunoDao {
+public class alunoDao{
 
     static Connection conn;
     ConnectionFactory conexao;
@@ -40,8 +37,23 @@ public class alunoDao {
         }
     }
 
-    public static void deletarAluno(Aluno aluno){
-        String sql = "delete from alunos where nome = ? and cpf = ? and altura = ? and peso = ? and dataNasc = ? and imc = ?";
+    public static boolean deletarAluno(Aluno aluno){
+        String sql = "delete from alunos where nome = ?";
+        try{
+            PreparedStatement stmt = getConnection().prepareStatement(sql);
+            stmt.setString(1, (aluno.getNome()));
+
+            stmt.execute();
+            stmt.close();
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao deletar aluno " + e.getMessage());
+        }
+        return false;
+    }
+
+
+    public static boolean atualizarAluno(Aluno aluno){
+        String sql = "update alunos set nome = ?, set cpf = ?, set altura = ?, set peso = ?, set dataNasc = ?, set imc = ? ";
         try{
             PreparedStatement stmt = getConnection().prepareStatement(sql);
             stmt.setString(1, (aluno.getNome()));
@@ -54,27 +66,9 @@ public class alunoDao {
             stmt.execute();
             stmt.close();
         } catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao deletar aluno " + e.getMessage());
-        }
-    }
-
-
-    public void atualizarAluno(Aluno aluno){
-        String sql = "UPDATE `juliana`.`alunos` set`nome` = ?, set`cpf` = ?, set `altura` = ?, set`peso` = ?, set`dataNasc` = ?, set`imc` = ? where(`id_aluno` = ?);";
-        try{
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, (aluno.getNome()));
-            stmt.setInt(2, (aluno.getCpf()));
-            stmt.setFloat(3, (aluno.getAltura()));
-            stmt.setFloat(4, (aluno.getPeso()));
-            stmt.setDate(5, (aluno.getDataNasc()));
-            stmt.setFloat(6, (aluno.getImc()));
-
-            stmt.execute();
-            stmt.close();
-        } catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar aluno " + e.getMessage());
         }
+        return false;
     }
 
     public static ObservableList<Aluno> getDataUsers(){
@@ -86,7 +80,7 @@ public class alunoDao {
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
-                list.add(new Aluno(rs.getString("nome"),rs.getInt("cpf"), rs.getFloat("altura"), rs.getFloat("peso"),rs.getDate("dataNasc"), rs.getFloat("cpf")));
+                list.add(new Aluno(rs.getString("nome"),rs.getInt("cpf"), rs.getFloat("altura"), rs.getFloat("peso"),rs.getDate("dataNasc"), rs.getFloat("imc")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

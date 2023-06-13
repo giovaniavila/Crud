@@ -1,5 +1,7 @@
 package resource.provajuliana;
 
+import javafx.beans.property.SimpleIntegerProperty;
+
 import java.sql.Date;
 
 public class Aluno {
@@ -7,9 +9,8 @@ public class Aluno {
     private int cpf;
     private float altura;
     private float peso;
-
+    private int id_aluno;
     private Date dataNasc;
-
     private float imc;
 
 
@@ -49,8 +50,15 @@ public class Aluno {
     public void setDataNasc(Date dataNasc){this.dataNasc = dataNasc;}
 
 
-
     public float getImc(){return imc;}
     public void setImc(float imc){this.imc = imc;}
 
+
+    public int getId_aluno() {
+        return id_aluno;
+    }
+
+    public void setId_aluno(int id_aluno) {
+        this.id_aluno = id_aluno;
+    }
 }
