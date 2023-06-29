@@ -33,8 +33,8 @@ In summary, the system developed using Java, JavaFX, Scene Builder, and MySQL al
           
 
 ## Script sql
-```create database juliana;
-use juliana;
+```create database student;
+use student;
 
 create table if not exists alunos(
 id_aluno int not null primary key auto_increment,
