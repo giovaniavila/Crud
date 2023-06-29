@@ -33,7 +33,8 @@ In summary, the system developed using Java, JavaFX, Scene Builder, and MySQL al
           
 
 ## Script sql
-```create database student;
+```
+create database student;
 use student;
 
 create table if not exists alunos(
